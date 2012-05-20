@@ -62,7 +62,7 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-
+    
 }
 
 //--------------------------------------------------------------
@@ -71,50 +71,50 @@ void testApp::draw(){
     int day, hour, minute, second;
     diffTime.Get(&day, &hour, &minute, &second);
     int lengthInHour = day * 24 + hour;
-        
+    
     // グリッドのサイズを算出
     float dx, dy;
     dx = (float)ofGetWidth()/6.0;
     dy = (float)ofGetHeight()/(float)lengthInHour;
-
+    
     // 取得した温度の記録を色で表現
     ofxSATTime tempTime;
     tempTime = downloadedTime[0];
     int num = 0;
     int hue; //色相
-	ofColor c; //面を塗る色
+    ofColor c; //面を塗る色
     float temprMin = -30, temprMax = 60;
-
+    
     for (int i = 0; i < lengthInHour; i++) {
         //MX
         hue = ofMap(TemperatureOutsideM[num].x, temprMin, temprMax, 180, 0);
-		c = ofColor::fromHsb(hue, 200, 255);
-		ofSetColor(c);
+        c = ofColor::fromHsb(hue, 200, 255);
+        ofSetColor(c);
         ofRect(0, dy * i, dx, dy);
         //MY
         hue = ofMap(TemperatureOutsideM[num].y, temprMin, temprMax, 180, 0);
-		c = ofColor::fromHsb(hue, 200, 255);
-		ofSetColor(c);
+        c = ofColor::fromHsb(hue, 200, 255);
+        ofSetColor(c);
         ofRect(dx, dy * i, dx, dy);
         //MZ
         hue = ofMap(TemperatureOutsideM[num].z, temprMin, temprMax, 180, 0);
-		c = ofColor::fromHsb(hue, 200, 255);
-		ofSetColor(c);
+        c = ofColor::fromHsb(hue, 200, 255);
+        ofSetColor(c);
         ofRect(dx*2, dy * i, dx, dy);
         //PX
         hue = ofMap(TemperatureOutsideP[num].x, temprMin, temprMax, 180, 0);
-		c = ofColor::fromHsb(hue, 200, 255);
-		ofSetColor(c);
+        c = ofColor::fromHsb(hue, 200, 255);
+        ofSetColor(c);
         ofRect(dx*3, dy * i, dx, dy);
         //PY
         hue = ofMap(TemperatureOutsideP[num].y, temprMin, temprMax, 180, 0);
-		c = ofColor::fromHsb(hue, 200, 255);
-		ofSetColor(c);
+        c = ofColor::fromHsb(hue, 200, 255);
+        ofSetColor(c);
         ofRect(dx*4, dy * i, dx, dy);
         //PZ
         hue = ofMap(TemperatureOutsideP[num].z, temprMin, temprMax, 180, 0);
-		c = ofColor::fromHsb(hue, 200, 255);
-		ofSetColor(c);
+        c = ofColor::fromHsb(hue, 200, 255);
+        ofSetColor(c);
         ofRect(dx*5, dy * i, dx, dy);
         
         tempTime.AddHour(1); //1時間増加
