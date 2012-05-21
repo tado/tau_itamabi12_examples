@@ -9,13 +9,15 @@ void testApp::setup(){
     ofRegisterTouchEvents(this);
     ofxAccelerometer.setup();
     ofxiPhoneAlerts.addListener(this);
+
     //iPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
     
     // 描画関連の初期設定
     ofEnableSmoothing();
     ofSetFrameRate(60);
     ofBackground(0, 0, 0);
-    
+    ofDisableSmoothing();
+        
     // 現在時間を最新としておく
     latest = ofxSATTime::CurrentTime();  
     
@@ -123,6 +125,32 @@ void testApp::draw(){
             num++;
         }
     }
+        
+    // 現在タッチしている場所の情報を表示
+    ofSetHexColor(0x000000);
+    ofLine(0, mouseY, ofGetWidth(), mouseY);
+    
+    ofxSATTime scanTime;
+    tempTime = downloadedTime[0];
+    scanTime = tempTime.AddHour(mouseY / dy);
+    for (int i = 0; i < downloadedTime.size(); i++) {
+        if (scanTime <= downloadedTime[i]) {
+            num = i;
+            break;
+        }
+    }
+    
+    ofDrawBitmapString(downloadedTime[num].Format("%YYYY/%MM/%DD %hh:%mm:%ss"), 10, mouseY - 10);
+
+    string log;
+    log = "MX : " + ofToString(TemperatureOutsideM[num].x, 2) + "\n"
+    + "MY : " + ofToString(TemperatureOutsideM[num].y, 2) + "\n"
+    + "MZ : " + ofToString(TemperatureOutsideM[num].z, 2) + "\n"
+    + "PY : " + ofToString(TemperatureOutsideP[num].x, 2) + "\n"
+    + "PY : " + ofToString(TemperatureOutsideP[num].y, 2) + "\n"
+    + "PZ : " + ofToString(TemperatureOutsideP[num].z, 2);
+    
+    ofDrawBitmapString(log, 10, mouseY + 20);
 }
 
 //--------------------------------------------------------------
