@@ -13,7 +13,6 @@ void testApp::setup(){
     // データ取得
     currentTime = ofxSATTime::currentTime();
     currentTime.subMonth(1);
-    _prism.update(ofxSATTime(currentTime).subDay(3));
 
     // 時間のスケール(60倍速)
     timeScale = 60.0;
@@ -21,6 +20,8 @@ void testApp::setup(){
     // イベント通知
     _prism.setNotifier(this);
     _prism.setup();
+    _prism.update();
+
     
     // カメラ
     cam.setDistance(20000);
