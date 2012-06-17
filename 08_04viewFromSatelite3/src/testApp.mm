@@ -22,7 +22,6 @@ void testApp::setup(){
     cam.setFarClip(40000);
     cam.setNearClip(100);
     cam.setFov(60);
-    cam.setPosition(0, 0, 16000);
     
     // 衛星軌道メッシュの初期化
     orbitMesh.setMode(OF_PRIMITIVE_LINE_STRIP); 
@@ -41,7 +40,7 @@ void testApp::update(){
     _prism->update();
     
     // 軌道推定の時間を更新
-    currentTime = ofxSATTime::currentTime();
+    currentTime = ofxSATTime::currentUTCTime() ;
     sgp.update(&currentTime);
     
     // 衛星の3D座標を算出
@@ -88,7 +87,7 @@ void testApp::draw(){
     // ログ表示
     glDisable(GL_DEPTH_TEST);
     ofSetHexColor(0xffffff);
-    string curretTimeStr = currentTime.format("%YYYY/%MM/%DD %hh:%mm:%ss");
+    string curretTimeStr = "UTC:" + currentTime.format("%YYYY/%MM/%DD %hh:%mm:%ss");
     ofDrawBitmapString(curretTimeStr, 10, 15);
     ofDrawBitmapString("x = " + ofToString(currentSatPos.x, 4) + "\n"
                        + "y = " + ofToString(currentSatPos.y, 4) + "\n"

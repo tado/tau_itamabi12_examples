@@ -38,7 +38,7 @@ void testApp::update(){
     _prism->update();
     
     // 軌道推定の時間を更新
-    currentTime = ofxSATTime::currentTime();
+    currentTime = ofxSATTime::currentUTCTime();
     sgp.update(&currentTime);
     
     // 衛星の3D座標を算出
@@ -85,7 +85,7 @@ void testApp::draw(){
     glDisable(GL_DEPTH_TEST);
     // ログ表示
     ofSetHexColor(0xffffff);
-    string curretTimeStr = currentTime.format("%YYYY/%MM/%DD %hh:%mm:%ss");
+    string curretTimeStr = "UTC:" + currentTime.format("%YYYY/%MM/%DD %hh:%mm:%ss");
     ofDrawBitmapString(curretTimeStr, 10, 15);
     ofDrawBitmapString("x = " + ofToString(currentSatPos.x, 4) + "\n"
                        + "y = " + ofToString(currentSatPos.y, 4) + "\n"
