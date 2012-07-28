@@ -4,12 +4,18 @@
 #include "ofxiPhone.h"
 #include "ofxiPhoneExtras.h"
 #include "ofxPrismSAT.h"
-#include "ofxSgp.h"
 
-class testApp : public ofxiPhoneApp {
+class testApp : public ofxiPhoneApp, public ofxPrismSAT::Notifier {
+    
 private:
 	// 衛星APIのofxPrismSATクラスへのインスタンス
-    ofxPrismSAT _prism;
+    ofxPrismSAT * prism;
+    
+    // 取得された日時の配列
+    vector<ofxSATTime> available;
+
+    // 最後にデータを取得した日時
+	ofxSATTime lastAvailable;
 	
 	// 衛星外面の気温を記録する変数
 	double _temperatureOutsideMX; // -X面
@@ -20,7 +26,7 @@ private:
 	double _temperatureOutsidePZ; // +Z面
 	
 	// カメラ
-	ofEasyCam _cam;
+	ofEasyCam cam;
 	
 public:
 	void setup();
@@ -38,6 +44,10 @@ public:
 	void gotFocus();
 	void gotMemoryWarning();
 	void deviceOrientationChanged(int newOrientation);
+    
+    virtual void onNotifyTLE(ofxSAT::TLERec const& tle, ofxSATTime const& time);
+    virtual void onNotifyData(ofxSATTime const& time);
+    virtual void onNotifyFinish(ofxSATError error);
 };
 
 

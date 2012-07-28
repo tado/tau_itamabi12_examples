@@ -6,7 +6,7 @@
 #include "ofxPrismSAT.h"
 #include "ofxSgp.h"
 
-class testApp : public ofxiPhoneApp {
+class testApp : public ofxiPhoneApp, public ofxPrismSAT::Notifier {
 	
 public:
 	void setup();
@@ -24,9 +24,16 @@ public:
 	void gotFocus();
 	void gotMemoryWarning();
 	void deviceOrientationChanged(int newOrientation);
+    
+    virtual void onNotifyTLE(ofxSAT::TLERec const& tle, ofxSATTime const& time);
+    virtual void onNotifyData(ofxSATTime const& time);
+    virtual void onNotifyFinish(ofxSATError error);
 	
 	// 衛星APIのofxPrismSATクラスへのインスタンス
-    ofxPrismSAT prism;
+    ofxPrismSAT * prism;
+    
+    // 取得された日時の配列
+    vector<ofxSATTime> available;
 	
 	// 最後にデータを取得した日時
 	ofxSATTime lastAvailable;
